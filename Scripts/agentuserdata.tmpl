@@ -1,0 +1,15 @@
+#!/bin/bash
+
+sudo apt update
+sudo apt-get update
+sudo apt-get upgrade -y
+mkdir /home/tabuser
+sudo echo "${private_ip} puppetmaster" >> /etc/hosts
+sudo echo "${private_ip} puppet" >> /etc/hosts
+sudo wget https://apt.puppetlabs.com/puppet6-release-bionic.deb
+sudo dpkg -i puppet6-release-bionic.deb
+sudo apt update
+sudo apt-get install puppet-agent -y
+sudo systemctl enable puppet
+sudo systemctl restart puppet
+sudo systemctl status puppet

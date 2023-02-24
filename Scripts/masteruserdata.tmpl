@@ -1,0 +1,17 @@
+#!/bin/bash
+
+sudo apt update
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo hostnamectl set-hostname puppetmaster
+output=${dollar}(hostname -I)
+sudo echo "$output puppetmaster" >> /etc/hosts
+sudo echo "$output puppet" >> /etc/hosts
+wget https://apt.puppetlabs.com/puppet6-release-bionic.deb
+sudo dpkg -i puppet6-release-bionic.deb
+sudo apt update
+sudo apt-get install puppetserver -y
+sudo sed -i 's/JAVA_ARGS="-Xms2g -Xmx2g/JAVA_ARGS="-Xms512m -Xmx512m/g' /etc/default/puppetserver
+sudo systemctl enable puppetserver.service
+sudo systemctl start puppetserver.service
+
